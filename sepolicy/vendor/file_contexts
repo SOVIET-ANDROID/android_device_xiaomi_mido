@@ -26,6 +26,7 @@
 
 # Power HAL
 /(vendor|system/vendor)/bin/hw/android\.hardware\.power@1\.2-service.jasmine_sprout-libperfmgr u:object_r:hal_power_default_exec:s0
+/sys/devices/virtual/graphics/fb0/idle_state        u:object_r:sysfs_graphics:s0
 
 # Input files
 /(vendor|system/vendor)/usr/idc(/.*)?		u:object_r:idc_file:s0
