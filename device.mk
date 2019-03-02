@@ -168,6 +168,7 @@ PRODUCT_PACKAGES += \
     libqdMetaData.system \
     libgenlock \
     libtinyxml
+    android.hardware.renderscript@1.0-impl
 
 # Device-specific settings
 PRODUCT_PACKAGES += \
@@ -275,7 +276,7 @@ PRODUCT_PACKAGES += \
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service-sdm
+    vendor.lineage.livedisplay@2.0-service.xiaomi
 
 # Media
 PRODUCT_COPY_FILES += \
