@@ -293,6 +293,7 @@ Return<void> Power::powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) {
 
     switch(hint) {
         case PowerHint_1_2::AUDIO_LOW_LATENCY:
+        if (!mSustainedPerfModeOn) {
             if (data) {
                 // Hint until canceled
                 mHintManager->DoHint("AUDIO_LOW_LATENCY");
@@ -306,6 +307,7 @@ Return<void> Power::powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) {
                 if (!android::base::SetProperty(kPowerHalAudioProp, "")) {
                     ALOGE("%s: could not clear powerHAL audio state property", __func__);
                 }
+	       }
             }
             break;
         case PowerHint_1_2::AUDIO_STREAMING:
