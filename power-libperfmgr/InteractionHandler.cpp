@@ -36,8 +36,8 @@
 InteractionHandler::InteractionHandler(std::shared_ptr<HintManager> const & hint_manager)
     : mState(INTERACTION_STATE_UNINITIALIZED),
       mWaitMs(100),
-      mMinDurationMs(1000),
-      mMaxDurationMs(5000),
+      mMinDurationMs(1400),
+      mMaxDurationMs(5650),
       mDurationMs(0),
       mHintManager(hint_manager) {
 }
@@ -118,7 +118,7 @@ void InteractionHandler::Acquire(int32_t duration) {
         return;
     }
 
-    int inputDuration = duration + 600;
+    int inputDuration = duration + 650;
     int finalDuration;
     if (inputDuration > mMaxDurationMs)
         finalDuration = mMaxDurationMs;
