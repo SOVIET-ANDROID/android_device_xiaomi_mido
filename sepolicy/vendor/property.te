@@ -1,5 +1,2 @@
 # Dirac
 type dirac_prop, property_type;
-
-#Power HAL
-type power_prop, property_type;

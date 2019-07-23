@@ -503,9 +503,6 @@ service vendor.power_off_alarm /vendor/bin/power_off_alarm
 
 on property:dev.bootcomplete=1
 
-    # Enable PowerHAL hint processing
-    setprop vendor.powerhal.init 1
-
     # Mount and use blkio cgroup
     mkdir /dev/blkio
     mount cgroup none /dev/blkio blkio
@@ -521,3 +518,6 @@ on property:dev.bootcomplete=1
     # Restart IRQ balancer after boot complete
     stop vendor.msm_irqbalance
     start vendor.msm_irqbalance
+
+    # set i/o
+    setprop sys.io.scheduler "cfq"
