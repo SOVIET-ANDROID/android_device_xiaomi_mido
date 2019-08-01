@@ -429,6 +429,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <name>IPictureAdjustment</name>
             <instance>default</instance>
         </interface>
+        <fqname>@2.0::IDisplayModes/default</fqname>
+        <fqname>@2.0::IPictureAdjustment/default</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.data.factory</name>
