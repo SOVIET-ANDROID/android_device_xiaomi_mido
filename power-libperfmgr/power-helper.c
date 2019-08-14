@@ -49,7 +49,7 @@
 #endif
 
 #ifndef TAP_TO_WAKE_NODE
-#define TAP_TO_WAKE_NODE "/proc/nvt_wake_gesture"
+#define TAP_TO_WAKE_NODE "/proc/touchpanel/enable_dt2w"
 #endif
 
 #define ARRAY_SIZE(x) (sizeof((x))/sizeof((x)[0]))
