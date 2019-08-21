@@ -272,7 +272,7 @@ bool Power::isSupportedGovernor() {
         buf = android::base::Trim(buf);
     }
     // Only support EAS 1.2, legacy EAS
-    if (buf == "schedutil" || buf == "sched") {
+    if (buf == "schedutil" || buf == "conservative") {
         return true;
     } else {
         LOG(ERROR) << "Governor not supported by powerHAL, skipping";
