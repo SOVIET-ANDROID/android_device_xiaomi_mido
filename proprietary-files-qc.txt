@@ -349,27 +349,9 @@ vendor/lib64/libvpplibrary.so|9801e062790202f7aa640c866415be71177908f7
 vendor/lib/libwms.so|61efcd8bc52e28b7a9b978da0af62355b358887c
 vendor/lib64/libwms.so|57d9f33071f4ae42ac77c98fb82f4e1fe8ac4754
 
-# Perf - from Tissot PKQ1.180917.001.V10.0.11.0.PDHMIXM
-lib/vendor.qti.hardware.perf@1.0.so|7dd24b7327308aaabc1e7ff2272e35cca31f87c2
-lib64/vendor.qti.hardware.perf@1.0.so|d54135d5ee902056acc86d8edd64d6338235c9f6
-vendor/bin/energy-awareness|d9b3f1cc791e0e9612a5ff5df6836af4c921a52b
-vendor/bin/hw/vendor.qti.hardware.perf@1.0-service|241892d9e476290e1eb0f9ab6c2d4daaff33c489
-vendor/bin/msm_irqbalance|bf933b58332cf94fe4a2072bc3e976a6a82efe3c
-vendor/etc/init/vendor.qti.hardware.perf@1.0-service.rc|b50182aadab2e31409df61c523d0fb914a394e43
-vendor/etc/perf/commonresourceconfigs.xml|20280e40ca43784316e96be09fe2d2296d79e972
-vendor/etc/perf/perfboostsconfig.xml|7e21bd6dd6fcbbbfc132bccef782ca8bcbe88184
-vendor/etc/perf/targetconfig.xml|1e240759319696ae5920a35d675317b7a4456685
-vendor/etc/perf/targetresourceconfigs.xml|f905a4f59091686d732d7121a9066e79d395056d
-vendor/lib/libperfgluelayer.so|3e6074dca57a25dd07c6398e8a7fc89e7a1d3f2a
-vendor/lib/libqti-perfd-client.so|25ca015b8a427045b43f169dc869c39ff2cb6c93
-vendor/lib/libqti-perfd.so|aab65a0c9d84c8161306a6de81f989cb7e5cb573
-vendor/lib/libqti-util.so|ca0e14efdcec2a85b894ce1b8559f481da2db1ed
-vendor/lib/vendor.qti.hardware.perf@1.0.so|7dd24b7327308aaabc1e7ff2272e35cca31f87c2
-vendor/lib64/libperfgluelayer.so|e8bc850cbb8d2c2b9ed8c6b9c48eb4b1fd197622
-vendor/lib64/libqti-perfd-client.so|3c013c17b1a595d45d69d03141eb1629dc91fbbc
-vendor/lib64/libqti-perfd.so|96806732f4e5f8c25ba2e12a3a939fc2889c7341
-vendor/lib64/libqti-util.so|30dc90c1636fd100a8e101dfa659e0b7299ff813
-vendor/lib64/vendor.qti.hardware.perf@1.0.so|d54135d5ee902056acc86d8edd64d6338235c9f6
+# Perfmgr - from taimen-qpp4.190502.018
+vendor/lib/libqti-perfd-client.so|16816cfdc873a2fdc9467db52bd5f2aaa33d2b50
+vendor/lib64/libqti-perfd-client.so|93c3f90f1b72a21ca325cbb375923b1deba80467
 
 # Peripheral manager - from Tissot PKQ1.180917.001.V10.0.11.0.PDHMIXM
 vendor/bin/pm-proxy|56e9bdaa39270aa4456c9995a8a9e4618ba616a6
