@@ -32,11 +32,18 @@ function 8953_sched_dcvs_eas()
     #governor settings
     echo 1 > /sys/devices/system/cpu/cpu0/online
     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/rate_limit_us
-    #set the hispeed_freq
-    echo 1401600 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
-    #default value for hispeed_load is 90, for 8953 and sdm450 it should be 85
-    echo 85 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
+    #echo 500 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+    #echo 20000 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
+    #echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/iowait_boost_enable
+
+    #CPU HZ
+    echo 652000 >  /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    echo 2016000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+
+    #Disable core control & enable thermal control
+    echo 0 > /sys/module/msm_thermal/core_control/enabled
+    echo 0 > /sys/module/msm_thermal/vdd_restriction/enabled
+    echo Y > /sys/module/msm_thermal/parameters/enabled
 }
 
 function 8917_sched_dcvs_eas()
@@ -95,19 +102,11 @@ function 8953_sched_dcvs_hmp()
 
     #governor settings
     echo 1 > /sys/devices/system/cpu/cpu0/online
-    echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    echo "19000 1401600:39000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    echo 85 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    echo 20000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    echo 1401600 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    echo 0 > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    echo "85 1401600:80" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    echo 39000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    echo 40000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
+    echo "conservative" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    echo "85" > /sys/devices/system/cpu/cpufreq/conservative/up_threshold
+    echo "30" > /sys/devices/system/cpu/cpufreq/conservative/down_threshold
     echo 19 > /proc/sys/kernel/sched_upmigrate_min_nice
     # Enable sched guided freq control
-    echo 1 > /sys/devices/system/cpu/cpufreq/interactive/use_sched_load
-    echo 1 > /sys/devices/system/cpu/cpufreq/interactive/use_migration_notif
     echo 200000 > /proc/sys/kernel/sched_freq_inc_notify
     echo 200000 > /proc/sys/kernel/sched_freq_dec_notify
 
@@ -1636,6 +1635,8 @@ case "$target" in
             hw_platform=`cat /sys/devices/system/soc/soc0/hw_platform`
         fi
 
+        echo 0 > /proc/sys/kernel/sched_boost
+
         if [ -f /sys/devices/soc0/platform_subtype_id ]; then
             platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
         fi
@@ -1708,7 +1709,7 @@ case "$target" in
                     done
                     for cpu_mbps_zones in /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/mbps_zones
                     do
-                        echo "1611 3221 5859 6445 7104" > $cpu_mbps_zones
+                        echo "769 1611 3221 5859 6445 7104" > $cpu_mbps_zones
                     done
                     for cpu_sample_ms in /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/sample_ms
                     do
@@ -1720,7 +1721,7 @@ case "$target" in
                     done
                     for cpu_min_freq in /sys/class/devfreq/soc:qcom,cpubw/min_freq
                     do
-                        echo 1611 > $cpu_min_freq
+                        echo 769 > $cpu_min_freq
                     done
                 done
 
@@ -1750,17 +1751,15 @@ case "$target" in
                     echo -n enable > $mode
                 done
 
-                #if the kernel version >=4.9,use the schedutil governor
-                KernelVersionStr=`cat /proc/sys/kernel/osrelease`
-                KernelVersionS=${KernelVersionStr:2:2}
-                KernelVersionA=${KernelVersionStr:0:1}
-                KernelVersionB=${KernelVersionS%.*}
-                if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 9 ]; then
+                #if the kernel have schedutil,use the schedutil governor
+                EnergyAware=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors | grep schedutil`
+                if [[ -n $EnergyAware ]]; then
                     8953_sched_dcvs_eas
                 else
                     8953_sched_dcvs_hmp
                 fi
-                echo 652800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+                echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
                 # Bring up all cores online
                 echo 1 > /sys/devices/system/cpu/cpu1/online
@@ -1775,7 +1774,7 @@ case "$target" in
                 echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
 
                 # re-enable thermal & BCL core_control now
-                echo 1 > /sys/module/msm_thermal/core_control/enabled
+                #echo 1 > /sys/module/msm_thermal/core_control/enabled
                 for mode in /sys/devices/soc.0/qcom,bcl.*/mode
                 do
                     echo -n disable > $mode
@@ -1794,8 +1793,8 @@ case "$target" in
                 done
 
                 # SMP scheduler
-                echo 85 > /proc/sys/kernel/sched_upmigrate
-                echo 85 > /proc/sys/kernel/sched_downmigrate
+                echo 75 > /proc/sys/kernel/sched_upmigrate
+                echo 60 > /proc/sys/kernel/sched_downmigrate
 
                 #HQ D1s-706 add for touch boost start
                 echo 0:1401600 1:1401600 2:1401600 3:1401600 4:1401600 5:1401600 6:1401600 7:1401600 > /sys/module/cpu_boost/parameters/input_boost_freq
@@ -4214,3 +4213,18 @@ esac
 misc_link=$(ls -l /dev/block/bootdevice/by-name/misc)
 real_path=${misc_link##*>}
 setprop persist.vendor.mmi.misc_dev_path $real_path
+
+# Check panel_name
+panel_model=`cat /sys/class/graphics/fb0/msm_fb_panel_info | grep panel_name`
+default_color = `getprop vendor.display.enable_default_color_mode`
+
+if [ "$panel_model" == "panel_name=nt35596 tianma fhd video mode dsi panel" ]; then
+
+        if ["$default_color" == "1"]; then
+        setprop vendor.display.enable_default_color_mode 0
+    fi
+
+    echo "1" > /sys/devices/platform/kcal_ctrl.0/kcal_enable
+        echo "237 237 237" > /sys/devices/platform/kcal_ctrl.0/kcal
+        echo "258" > /sys/devices/platform/kcal_ctrl.0/kcal_sat
+fi
