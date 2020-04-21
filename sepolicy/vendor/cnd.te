@@ -1,1 +1,1 @@
-allow cnd wifi_prop:file { read open getattr };
+get_prop(cnd, wifi_prop)
