@@ -1172,10 +1172,11 @@ vendor/lib64/libsensor1.so|1c0a480379e7aed17c2ebb84b164380ca29b0ff0
 vendor/lib64/libsensor_reg.so|719d7495beb984989f52eab7eaeaaeb05a5c90bd
 vendor/lib64/sensors.ssc.so|66a80eb4c59176b86da051e9a4daa3f4077bc478
 
-# Thermal - from Vsmart Casuarina 10/QKQ1.200311.002/V430A_OPN_U_B7_200425
-vendor/bin/thermal-engine|5d0d63dddb90b4fa4f5be83616d25414377c7a88
-vendor/lib/libthermalclient.so|c0089a7fdd34bc5f3ea0556e5f4a087ab02fc34f
-vendor/lib64/libthermalclient.so|20f1fd238fc81bf1c6828ec416121c0ef66e0df1
+# Thermal - from olive PKQ1.190319.001 V10.3.5.0.PCNCNXM
+vendor/bin/thermal-engine|7b59145e9e75cdc8b491f2ed7a04c0880899fc74
+-vendor/lib/libthermalclient.so|2c91276835c185e47a66916d24b3adc98b17e6eb
+-vendor/lib64/libthermalclient.so|faf92c38d52487cb8fa350f1ec786af17ac716cb
+vendor/lib64/libthermalfeature.so|8306e4bc55a4b9c7cb52a19fed11a9f48a604444
 
 # Time services - from Vsmart Casuarina 10/QKQ1.200311.002/V430A_OPN_U_B7_200425
 -vendor/app/TimeService/TimeService.apk:vendor/app/TimeService/TimeService.apk;:timeservice_app_cert-legacy-um|574ced409fa532f4f548b595efc90b852f27f1f8
